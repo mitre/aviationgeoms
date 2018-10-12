@@ -1,0 +1,35 @@
+---
+title: "aviationgeoms"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Use
+
+The `aviationgeoms` package makes plotting aviation-related things easier.
+These are true `ggplot2` geoms and can be used accordingly.
+
+For example, the RNP AR approaches at KDEN and the corresponding runways can be plotted after obtained (using the `caasddb` package in this example).
+
+```{r, warning=FALSE, eval=FALSE}
+ggplot() +
+  geom_procedure(data=rnps, aes(x=longitude, y=latitude, leg_type=leg_type,
+                                rf_center_longitude=rf_center_longitude,
+                                rf_center_latitude=rf_center_latitude,
+                                turn_direction=turn_direction, color=procedure,
+                                group=paste(procedure, transition))) +
+  geom_runway(data=rwys, fill="cyan", color="cyan",
+              aes(latitude_AER=latitude_AER, longitude_AER=longitude_AER,
+                  latitude_DER=latitude_DER, longitude_DER=longitude_DER,
+                  group=paste(airport, runway))) +
+  coord_map() 
+```
+
+## Installation
+
+```{r, eval=FALSE}
+devtools::install_github("mitre/aviationgeoms")
+```

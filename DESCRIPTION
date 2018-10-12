@@ -1,0 +1,23 @@
+Package: aviationgeoms
+Title: easy bake aviation ggplot
+Version: 1.1.0
+Authors@R: c(person("Matt", "Pollock", email = "mpollock@mitre.org", role = c("aut", "cre")),
+             person("Seth", "Wenchel", email = "swenchel@mitre.org", role = c("aut")),
+             person(family = "The MITRE Corporation", role = c("cph")))
+Description: easy aviation ggplot layers
+Depends:
+    ggplot2,
+    R (>= 3.1.0)
+Imports:
+    earthtools,
+    ggmap,
+    geosphere,
+    geohash,
+    knitr
+Suggests: testthat
+License: Apache License 2.0 | file LICENSE
+LazyData: true
+URL: https://mustache.mitre.org/projects/CGRP/repos/aviationgeoms/browse
+BugReports: https://anthill.mitre.org/projects/CGRP
+VignetteBuilder: knitr
+RoxygenNote: 6.1.0
