@@ -139,11 +139,11 @@ StatProcedure <- ggproto("StatProcedure", Stat,
 #' @export
 #'
 #' @examples
-#' \dontrun(
+#' \dontrun{
 #' # given some procedure data with the latitude, longitude, procedure/transition names, and ARINC424 leg types
 #' library(ggplot2)
 #' ggplot(procs, aes(y=latitude, x=longitude, group=paste(procedure, transition), leg_type=leg_type)) + geom_procedure()
-#' )
+#' }
 #' @rdname procedure
 stat_procedure <- function(mapping=NULL, data=NULL, geom="path",
                            position = "identity", na.rm = FALSE, show.legend = NA,
