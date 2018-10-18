@@ -2,7 +2,7 @@ Package: aviationgeoms
 Title: easy bake aviation ggplot
 Version: 1.1.0
 Authors@R: c(person("Matt", "Pollock", email = "mpollock@mitre.org", role = c("aut", "cre")),
-             person("Seth", "Wenchel", email = "swenchel@mitre.org", role = c("aut")),
+             person("Seth", "Wenchel", email = "seth@wenchel.com", role = c("aut","cph"), comment=c(ORCID = "0000-0001-6099-0200")),
              person(family = "The MITRE Corporation", role = c("cph")))
 Description: easy aviation ggplot layers
 Depends:
@@ -17,7 +17,7 @@ Imports:
 Suggests: testthat
 License: Apache License 2.0 | file LICENSE
 LazyData: true
-URL: https://mustache.mitre.org/projects/CGRP/repos/aviationgeoms/browse
-BugReports: https://anthill.mitre.org/projects/CGRP
+URL: https://github.com/mitre/aviationgeoms
+BugReports: https://github.com/mitre/aviationgeoms/issues
 VignetteBuilder: knitr
 RoxygenNote: 6.1.0
