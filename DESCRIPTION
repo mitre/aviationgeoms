@@ -20,4 +20,4 @@ LazyData: true
 URL: https://github.com/mitre/aviationgeoms
 BugReports: https://github.com/mitre/aviationgeoms/issues
 VignetteBuilder: knitr
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
