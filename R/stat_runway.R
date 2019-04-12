@@ -91,9 +91,26 @@ StatRunway <- ggproto("StatRunway", Stat,
 #' @export
 #'
 #' @examples
-#' # given some runway data with the latitude/longitude for the arrival/departure ends of the runway (AER/DER)
+#' library(tibble)
 #' library(ggplot2)
-#' ggplot(den_rwys, aes(latitude_AER=latitude_AER, longitude_AER=longitude_AER,latitude_DER=latitude_DER, longitude_DER=longitude_DER, group=runway))+stat_runway()
+#' 
+#' # define data with the latitude/longitude for the arrival/departure ends of the runway (AER/DER)
+#' # DEN example derived from https://www.airnav.com/airport/KDEN
+#' den_rwys <- tribble(
+#'   ~runway, ~latitude_AER, ~longitude_AER, ~latitude_DER, ~longitude_DER,
+#'   "7/25", 39+50.457/60, -1*(104+43.599/60), 39+50.439/60, -1*(104+41.036/60),
+#'   "8/26", 39+52.653/60, -1*(104+39.734/60), 39+52.635/60, -1*(104+37.169/60),
+#'   "16L/34R", 39+53.822/60, -1*(104+41.208/60), 39+51.846/60, -1*(104+41.231/60),
+#'   "16R/34L", 39+53.748/60, -1*(104+41.765/60), 39+51.113/60, -1*(104+41.795/60),
+#'   "17L/35R", 39+51.897/60, -1*(104+38.478/60), 39+49.921/60, -1*(104+38.503/60),
+#'   "17R/35L", 39+51.675/60, -1*(104+39.609/60), 39+49.699/60, -1*(104+39.633/60)
+#' )
+#' 
+#' ggplot(den_rwys, 
+#'        aes(latitude_AER=latitude_AER, longitude_AER=longitude_AER,
+#'            latitude_DER=latitude_DER, longitude_DER=longitude_DER, 
+#'            group=runway, fill=runway)) + 
+#'   geom_runway()
 #'
 #' @rdname runway
 stat_runway <- function(mapping=NULL, data=NULL, geom="polygon",
