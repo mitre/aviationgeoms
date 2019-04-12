@@ -13,7 +13,8 @@ Imports:
     ggmap,
     geosphere,
     geohash,
-    knitr
+    knitr,
+    tibble
 Suggests: testthat
 License: Apache License 2.0 | file LICENSE
 LazyData: true
