@@ -61,7 +61,7 @@ by \code{caasddb::fetch_runways()}
 \item \bold{longitude_AER}
 \item \bold{latitude_DER}
 \item \bold{longitude_DER}
-\item width
+\item width, defaults to runway width of 150ft if not provided
 \item alpha
 \item colour
 \item fill
