@@ -31,7 +31,7 @@ get_limits <- function(latitude, longitude, north, east, south=north, west=east)
 #'
 #' Given central coordinates and distances, determine the limits of the x-scale
 #'
-#' @importFrom earthtools et_projection
+#' @importFrom earthtools compute_projection
 #' @param latitude numeric scalar, center point latitude in decimal degrees
 #' @param longitude numeric scalar, center point longitude in decimal degrees
 #' @param east numeric scalar, distance ease of center point to view plot in nautical miles
@@ -40,7 +40,7 @@ get_limits <- function(latitude, longitude, north, east, south=north, west=east)
 #' export
 #' @noRd
 get_x_limits <- function(latitude, longitude, east, west=east) {
-  xlims <- et_projection(latitude, longitude, c(270, 90), c(west, east), output_type="matrix")
+  xlims <- compute_projection(latitude, longitude, c(270, 90), c(west, east), output_type="matrix")
   return(sort(xlims[, 2]))
 }
 
@@ -48,7 +48,7 @@ get_x_limits <- function(latitude, longitude, east, west=east) {
 #'
 #' Given central coordinates and distances, determine the limits of the y-scale
 #'
-#' @importFrom earthtools et_projection
+#' @importFrom earthtools compute_projection
 #' @param latitude numeric scalar, center point latitude in decimal degrees
 #' @param longitude numeric scalar, center point longitude in decimal degrees
 #' @param north numeric scalar, distance north of center point to view plot in nautical miles
@@ -57,6 +57,6 @@ get_x_limits <- function(latitude, longitude, east, west=east) {
 #' export
 #' @noRd
 get_y_limits <- function(latitude, longitude, north, south=north) {
-  ylims <- et_projection(latitude, longitude, c(180, 0), c(south, north), output_type="matrix")
+  ylims <- compute_projection(latitude, longitude, c(180, 0), c(south, north), output_type="matrix")
   return(sort(ylims[, 1]))
 }

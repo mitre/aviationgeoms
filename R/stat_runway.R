@@ -1,7 +1,7 @@
 #' @format NULL
 #' @usage NULL
 #' @export
-#' @importFrom earthtools et_bearing_initial et_projection
+#' @importFrom earthtools compute_bearing_initial compute_projection
 #' @importFrom ggplot2 aes Stat ggproto
 #' @noRd
 StatRunway <- ggproto("StatRunway", Stat,
@@ -15,18 +15,18 @@ StatRunway <- ggproto("StatRunway", Stat,
                                          linetype = 1, alpha = 1
                        ),
 
-                       et_group = function(data, scales){
+                       compute_group = function(data, scales){
                          if(!("width" %in% names(data)))
                            data$width <- 150
-                         bearing <- et_bearing_initial(data$latitude_AER, data$longitude_AER,
+                         bearing <- compute_bearing_initial(data$latitude_AER, data$longitude_AER,
                                                             data$latitude_DER, data$longitude_DER)
-                         arrival_corner1 <- et_projection(output_type="data.frame",
+                         arrival_corner1 <- compute_projection(output_type="data.frame",
                                                                data$latitude_AER, data$longitude_AER, distance=data$width/(2*6076.12), bearing=(bearing+90)%%360)
-                         arrival_corner2 <- et_projection(output_type="data.frame",
+                         arrival_corner2 <- compute_projection(output_type="data.frame",
                                                                data$latitude_AER, data$longitude_AER, distance=data$width/(2*6076.12), bearing=(bearing+270)%%360)
-                         departure_corner1 <- et_projection(output_type="data.frame",
+                         departure_corner1 <- compute_projection(output_type="data.frame",
                                                                  data$latitude_DER, data$longitude_DER, distance=data$width/(2*6076.12), bearing=(bearing+270)%%360)
-                         departure_corner2 <- et_projection(output_type="data.frame",
+                         departure_corner2 <- compute_projection(output_type="data.frame",
                                                                  data$latitude_DER, data$longitude_DER, distance=data$width/(2*6076.12), bearing=(bearing+90)%%360)
                           data.frame(x=c(arrival_corner1[,2], arrival_corner2[,2], departure_corner1[,2],
                                                                   departure_corner2[,2], arrival_corner1[,2]),
