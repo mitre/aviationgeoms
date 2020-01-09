@@ -3,7 +3,6 @@
 \docType{package}
 \name{aviationgeoms}
 \alias{aviationgeoms}
-\alias{aviationgeoms-package}
 \title{ggplot2 for aviation}
 \description{
 This package provides some simple function calls to 

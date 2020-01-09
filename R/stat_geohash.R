@@ -2,7 +2,7 @@
 
 #' @format NULL
 #' @usage NULL
-#' @importFrom geohash gh_decode
+#' @importFrom geohashTools gh_decode
 #' @export
 #' @noRd
 StatGeohash <- ggproto("StatGeohash", Stat,
@@ -17,11 +17,11 @@ StatGeohash <- ggproto("StatGeohash", Stat,
                        compute_group = function(data, scales){
                          if(!("geohash" %in% names(data)))
                            stop("missing aesthetic \'geohash\' from stat_geohash")
-                         lat_lng_errs <- gh_decode(data$geohash)  
-                         out <- data.frame(xmin=lat_lng_errs$lng-lat_lng_errs$lng_error,
-                                           xmax=lat_lng_errs$lng+lat_lng_errs$lng_error,
-                                           ymin=lat_lng_errs$lat-lat_lng_errs$lat_error,
-                                           ymax=lat_lng_errs$lat+lat_lng_errs$lat_error, 
+                         lat_lng_errs <- gh_decode(data$geohash, TRUE)  
+                         out <- data.frame(xmin=lat_lng_errs$longitude-lat_lng_errs$delta_longitude,
+                                           xmax=lat_lng_errs$longitude+lat_lng_errs$delta_longitude,
+                                           ymin=lat_lng_errs$latitude -lat_lng_errs$delta_latitude,
+                                           ymax=lat_lng_errs$latitude +lat_lng_errs$delta_latitude, 
                                            geohash=data$geohash,
                                            stringsAsFactors = FALSE)
                          return(out)
@@ -75,7 +75,7 @@ StatGeohash <- ggproto("StatGeohash", Stat,
 #' @export
 #'
 #' @examples
-#' df <- data.frame(geohash=c("SSW","SIW"), stringsAsFactors = FALSE)
+#' df <- data.frame(geohash=c("SSW","S1W"), stringsAsFactors = FALSE)
 #' library(ggplot2)
 #' ggplot(df, aes(geohash=geohash))+stat_geohash()
 #' ggplot(df, aes(geohash=geohash))+geom_rect(stat="geohash") +coord_quickmap()
