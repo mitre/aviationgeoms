@@ -3,7 +3,7 @@
 #' @usage NULL
 #' @export
 #' @importFrom ggplot2 aes Stat ggproto
-#' @importFrom geosphere bearing distHaversine
+#' @importFrom geosphere bearing distHaversine destPoint
 #' @noRd
 StatProcedure <- ggproto("StatProcedure", Stat,
                          default_aes = aes(x=NA,
@@ -15,11 +15,11 @@ StatProcedure <- ggproto("StatProcedure", Stat,
                                            colour = "black", fill = NULL, size = 0.5,
                                            linetype = 1, alpha = 1
                          ),
-                         
+
                          compute_group = function(self, data, scales){
                            ggplot2:::check_required_aesthetics(c("x","y","leg_type"),names(data), ggplot2:::snake_class(self))
                            supported_types <- c("IF","TF", "RF")
-                           
+
                            if(!all(data$leg_type %in% supported_types)){ # contains an unsupported type like "FM" or "HM"
                              warning("in stat_geom, unsupported leg type: ",paste(unique(setdiff(data$leg_type, supported_types)),collapse=" "),ifelse(is.null(data$group),"",paste(" in group",data$group[1])))
                              data <- subset(data, leg_type!="HM") # remove all HM legs b/c they can be ignored safely
@@ -43,37 +43,51 @@ StatProcedure <- ggproto("StatProcedure", Stat,
                            names(df) <- c('xend','yend',names(df[,-c(1,2)])) # change the names of the last two columns which are the leaded x and y
                            df$start_bearing <- (bearing(df[, c('rf_center_longitude','rf_center_latitude')], df[, c('x','y')]))
                            df$stop_bearing <- (bearing(df[, c('rf_center_longitude','rf_center_latitude')], df[, c('xend','yend')]))
-                           
+
                            df$radius_turn <- distHaversine(df[,c('rf_center_longitude', 'rf_center_latitude')],
                                                            df[,c('xend', 'yend')])
-                           
+
                            left_turn <- df$turn_direction=="L"
                            df$inc <- (-1)^left_turn
                            start_before_stop <- sign(df$stop_bearing-df$start_bearing)
                            start_before_stop[is.na(start_before_stop)] <- 0
                            df$start_bearing <- df$start_bearing + ifelse(left_turn, 360*(start_before_stop==1), 360*(start_before_stop==-1) )
-                           
+
                            transposed_df <- as.data.frame(t((df[,c("rf_center_longitude","rf_center_latitude", "radius_turn","start_bearing","stop_bearing", "inc")])))
                            get_points <- function(x){
                              if(!is.na(x[1])){
-                               #if(x[6]>1)
-                               b <- try(seq(x[4],x[5],x[6]),silent = TRUE)
-                               if(inherits(b, "try-error")) # TODO This should be cleaned up.  we shouldn't need try and then the length check.  there must be a cleaner logic.
-                                 b <- seq(x[4],x[5],-x[6])
-                               if(length(b)>359)
-                                 b <- seq(x[4]%%360,x[5]%%360,x[6])
-                               
-                               t(geosphere::destPoint(x[1:2],d=x[3], b=b))
+
+                               start <- x[4]
+                               end <- x[5]
+                               inc <- x[6]
+
+                               #gets angles on 0-360 range (instead of -180 to 180)
+                               if(start < 0)
+                                 start <- 360 + start
+                               if(end < 0)
+                                 end <- 360 + end
+
+                               #if start more than end for right turn then subtract 360 from start
+                               if(start > end & inc == 1){
+                                 start <- start - 360
+                                 #if start is less than end for left turn subtract 360 from end
+                               } else if (start < end & inc == -1){
+                                 end <- end - 360
+                               }
+
+                               b <- seq(start, end, inc)
+
+                               t(destPoint(x[1:2],d=x[3], b=b))
                              }
                            }
-                           
-                           
+
+
                            list_o_points <- lapply(transposed_df, get_points)
-                           
+
                            m <- vapply(1:(2*nrow(df)), list, list(0))
                            m[seq(1,length(m),2)] <- lapply(as.data.frame(t(df[,c('x','y')])), function(x){x})
                            m[seq(2,length(m),2)] <- lapply(list_o_points, function(x){x})
-                           
+
                            #  browser()
                            out_data <- data.frame(t(matrix(unlist(m), nrow=2)))
                            names(out_data) <- c("x","y")
