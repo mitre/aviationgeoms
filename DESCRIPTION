@@ -12,7 +12,7 @@ Imports:
     earthtools,
     ggmap,
     geosphere,
-    geohash,
+    geohashTools,
     knitr,
     tibble
 Suggests: testthat
@@ -21,4 +21,4 @@ LazyData: true
 URL: https://github.com/mitre/aviationgeoms
 BugReports: https://github.com/mitre/aviationgeoms/issues
 VignetteBuilder: knitr
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.0

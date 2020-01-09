@@ -4,9 +4,15 @@
 \alias{get_ggmap}
 \title{convienance function to get ggmap}
 \usage{
-get_ggmap(center_latitude, center_longitude, radius,
-  map_type = "terrain", map_source = "google", buffer_fraction = 0,
-  ...)
+get_ggmap(
+  center_latitude,
+  center_longitude,
+  radius,
+  map_type = "terrain",
+  map_source = "google",
+  buffer_fraction = 0,
+  ...
+)
 }
 \arguments{
 \item{center_latitude}{latitude of center of map}

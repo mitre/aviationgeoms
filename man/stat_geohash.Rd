@@ -4,9 +4,16 @@
 \alias{stat_geohash}
 \title{Display rectangles representing each geohash}
 \usage{
-stat_geohash(mapping = NULL, data = NULL, geom = "rect",
-  position = "identity", na.rm = FALSE, show.legend = NA,
-  inherit.aes = TRUE, ...)
+stat_geohash(
+  mapping = NULL,
+  data = NULL,
+  geom = "rect",
+  position = "identity",
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE,
+  ...
+)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{\link{aes}} or
@@ -63,7 +70,7 @@ Given a data.frame containing a list of geohash character strings, plot rectangl
 }
 }
 \examples{
-df <- data.frame(geohash=c("SSW","SIW"), stringsAsFactors = FALSE)
+df <- data.frame(geohash=c("SSW","S1W"), stringsAsFactors = FALSE)
 library(ggplot2)
 ggplot(df, aes(geohash=geohash))+stat_geohash()
 ggplot(df, aes(geohash=geohash))+geom_rect(stat="geohash") +coord_quickmap()
