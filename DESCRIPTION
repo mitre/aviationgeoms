@@ -10,15 +10,12 @@ Depends:
     R (>= 3.1.0)
 Imports:
     earthtools,
-    ggmap,
     geosphere,
-    geohashTools,
-    knitr,
-    tibble
-Suggests: testthat
+    geohashTools
+Suggests: testthat, knitr, tibble
 License: Apache License 2.0 | file LICENSE
 LazyData: true
 URL: https://github.com/mitre/aviationgeoms
 BugReports: https://github.com/mitre/aviationgeoms/issues
 VignetteBuilder: knitr
-RoxygenNote: 7.0.0
+RoxygenNote: 7.0.2
