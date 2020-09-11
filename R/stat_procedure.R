@@ -47,7 +47,7 @@ StatProcedure <- ggproto("StatProcedure", Stat,
                            df$radius_turn <- distHaversine(df[,c('rf_center_longitude', 'rf_center_latitude')],
                                                            df[,c('xend', 'yend')])
 
-                           left_turn <- df$turn_direction=="L"
+                           left_turn <- toupper(df$turn_direction) %in% c("L","LEFT")
                            df$inc <- (-1)^left_turn
                            start_before_stop <- sign(df$stop_bearing-df$start_bearing)
                            start_before_stop[is.na(start_before_stop)] <- 0
